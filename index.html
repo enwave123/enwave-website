@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="株式会社ENWAVE - 縁を育て、地域と自然に良い波を起こす企業。ワンボイスアプリ、水耕栽培事業、メロン菓子土産の製造販売を行っています。">
+    <meta name="keywords" content="ENWAVE, エンウェーブ, ワンボイス, 水耕栽培, メロン, 菓子, 八王子">
+    <title>株式会社ENWAVE | 縁を育て、地域と自然に良い波を起こす</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- ヘッダー -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <a href="#home">
+                    <span class="logo-en">EN</span><span class="logo-wave">WAVE</span>
+                </a>
+            </div>
+            <nav class="nav">
+                <button class="nav-toggle" aria-label="メニューを開く">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-menu">
+                    <li><a href="#home">ホーム</a></li>
+                    <li><a href="#about">会社概要</a></li>
+                    <li><a href="#services">事業内容</a></li>
+                    <li><a href="#philosophy">企業理念</a></li>
+                    <li><a href="#contact">お問い合わせ</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ヒーローセクション -->
+    <section id="home" class="hero">
+        <div class="hero-bg">
+            <div class="wave-animation"></div>
+        </div>
+        <div class="container hero-content">
+            <h1 class="hero-title">
+                <span class="hero-title-main">縁を育て、</span>
+                <span class="hero-title-main">地域と自然に良い波を起こす</span>
+            </h1>
+            <p class="hero-subtitle">
+                人と人、企業と地域、都市と生産地、そして人と自然を結び直す。<br>
+                私たちENWAVEは、持続可能な未来を共に創造します。
+            </p>
+            <a href="#services" class="btn btn-primary">事業内容を見る</a>
+        </div>
+        <div class="scroll-indicator">
+            <span></span>
+        </div>
+    </section>
+
+    <!-- 事業内容セクション -->
+    <section id="services" class="services">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">事業内容</h2>
+                <p class="section-subtitle">Services</p>
+            </div>
+            <div class="services-grid">
+                <!-- ワンボイスアプリ -->
+                <div class="service-card featured">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+                            <line x1="12" y1="19" x2="12" y2="23"/>
+                            <line x1="8" y1="23" x2="16" y2="23"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">ワンボイスアプリ</h3>
+                    <p class="service-description">
+                        音声技術を活用した革新的なコミュニケーションアプリの開発・運営。
+                        人と人との「縁」をデジタルの力でつなぎ、新しいコミュニケーションの形を提案します。
+                    </p>
+                    <span class="service-tag">NEW</span>
+                </div>
+
+                <!-- 水耕栽培事業 -->
+                <div class="service-card featured">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <path d="M12 8v8"/>
+                            <path d="M8 12h8"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">水耕栽培事業</h3>
+                    <p class="service-description">
+                        環境に配慮した持続可能な農業として、水耕栽培による作物生産を展開。
+                        水の流れのように無駄を減らし、地域の食と農業の未来を支えます。
+                    </p>
+                    <span class="service-tag">Coming Soon</span>
+                </div>
+
+                <!-- メロン菓子土産 -->
+                <div class="service-card featured">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="10"/>
+                            <path d="M8 14s1.5 2 4 2 4-2 4-2"/>
+                            <line x1="9" y1="9" x2="9.01" y2="9"/>
+                            <line x1="15" y1="9" x2="15.01" y2="9"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">メロン菓子土産の製造・販売</h3>
+                    <p class="service-description">
+                        自社水耕栽培で育てたメロンを使用した、こだわりの菓子土産を製造・販売。
+                        地産地消を推進し、地域の魅力を全国へ届けます。
+                    </p>
+                    <span class="service-tag">Coming Soon</span>
+                </div>
+
+                <!-- 障害福祉サービス -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="9" cy="7" r="4"/>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">障害福祉サービス事業</h3>
+                    <p class="service-description">
+                        障害者の日常生活及び社会生活を総合的に支援するための法律に基づく福祉サービスを提供。
+                        すべての人が活躍できる社会づくりに貢献します。
+                    </p>
+                </div>
+
+                <!-- ペットサロン -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M10 5.172C10 3.782 8.423 2.679 6.5 3c-2.823.47-4.113 6.006-4 7 .08.703 1.725 1.722 3.656 1 1.261-.472 1.96-1.45 2.344-2.5"/>
+                            <path d="M14.267 5.172c0-1.39 1.577-2.493 3.5-2.172 2.823.47 4.113 6.006 4 7-.08.703-1.725 1.722-3.656 1-1.261-.472-1.855-1.45-2.239-2.5"/>
+                            <path d="M8 14v.5"/>
+                            <path d="M16 14v.5"/>
+                            <path d="M11.25 16.25h1.5L12 17l-.75-.75z"/>
+                            <path d="M4.42 11.247A13.152 13.152 0 0 0 4 14.556C4 18.728 7.582 21 12 21s8-2.272 8-6.444c0-1.061-.162-2.2-.493-3.309m-9.243-6.082A8.801 8.801 0 0 1 12 5c.78 0 1.5.108 2.161.306"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">ペットサロン・用品販売</h3>
+                    <p class="service-description">
+                        ペットサロンの経営、ペット用品・雑貨の企画・開発・製造・販売を行っています。
+                        大切な家族であるペットとの暮らしをサポートします。
+                    </p>
+                </div>
+
+                <!-- 飲食事業 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M18 8h1a4 4 0 0 1 0 8h-1"/>
+                            <path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                            <line x1="6" y1="1" x2="6" y2="4"/>
+                            <line x1="10" y1="1" x2="10" y2="4"/>
+                            <line x1="14" y1="1" x2="14" y2="4"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">飲食店・製菓事業</h3>
+                    <p class="service-description">
+                        飲食店の経営および飲食製菓業を展開。
+                        地域の食文化を大切にしながら、新しい食の価値を創造します。
+                    </p>
+                </div>
+
+                <!-- アクアポニックス -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 12h20"/>
+                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+                            <circle cx="12" cy="12" r="10"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">アクアポニックス事業</h3>
+                    <p class="service-description">
+                        魚の養殖と植物栽培を組み合わせた循環型農業システム。
+                        資源の循環を実現し、持続可能な食料生産に取り組みます。
+                    </p>
+                </div>
+
+                <!-- その他 -->
+                <div class="service-card">
+                    <div class="service-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="3"/>
+                            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="service-title">その他の事業</h3>
+                    <p class="service-description">
+                        保健大衆浴場及び施設の経営など、地域に根ざした多様な事業を展開。
+                        すべての事業を通じて、社会に持続的な価値を提供します。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 会社概要セクション -->
+    <section id="about" class="about">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">会社概要</h2>
+                <p class="section-subtitle">Company</p>
+            </div>
+            <div class="about-content">
+                <div class="about-table-wrapper">
+                    <table class="about-table">
+                        <tbody>
+                            <tr>
+                                <th>会社名</th>
+                                <td>株式会社ENWAVE</td>
+                            </tr>
+                            <tr>
+                                <th>代表取締役</th>
+                                <td>北村 陽朗</td>
+                            </tr>
+                            <tr>
+                                <th>設立</th>
+                                <td>令和6年12月3日</td>
+                            </tr>
+                            <tr>
+                                <th>資本金</th>
+                                <td>300万円</td>
+                            </tr>
+                            <tr>
+                                <th>本店所在地</th>
+                                <td>東京都八王子市小宮町1096番地16</td>
+                            </tr>
+                            <tr>
+                                <th>法人番号</th>
+                                <td>0101-01-016438</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 企業理念セクション -->
+    <section id="philosophy" class="philosophy">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">企業理念</h2>
+                <p class="section-subtitle">Philosophy</p>
+            </div>
+            <div class="philosophy-content">
+                <div class="philosophy-main">
+                    <div class="philosophy-name">
+                        <h3>社名の由来</h3>
+                        <div class="name-breakdown">
+                            <div class="name-part">
+                                <span class="name-letter">EN</span>
+                                <span class="name-meaning">縁・円・園</span>
+                            </div>
+                            <span class="name-plus">+</span>
+                            <div class="name-part">
+                                <span class="name-letter">WAVE</span>
+                                <span class="name-meaning">波・流れ</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="philosophy-text">
+                        <p>
+                            <strong>「EN（縁）」</strong>は、人と人、企業と地域、都市と生産地、そして人と自然を結び直す"つながり"を意味します。
+                            偶然の出会いを大切にしながら、信頼を積み重ね、長く続く関係を育てていく。私たちは、この「縁」を事業の出発点に据えています。
+                        </p>
+                        <p>
+                            同時に私たちは、「EN」に<strong>「円（循環）」</strong>と<strong>「園（育む場）」</strong>の意味も重ねています。
+                            資源・価値・想いが一方通行で終わらず循環していくこと（円）、そして作物や人材、地域の可能性を育てる場所になること（園）。
+                            今後、一次生産（水耕栽培など）にも取り組む私たちにとって、「EN」は"育みと循環"の象徴でもあります。
+                        </p>
+                        <p>
+                            <strong>「WAVE（波）」</strong>は、変化や影響の広がりを表す言葉です。波は小さなうねりから始まり、やがて遠くまで届きます。
+                            私たちの挑戦もまた、ひとつの縁から生まれ、地域や社会へと連鎖し、次の挑戦を呼び込みます。
+                            さらにWAVEは、水や流れ、自然のリズムも想起させます。水耕栽培における"水の流れ"のように、無駄を減らし、環境に配慮しながら、持続可能なかたちで価値を生み出していく姿勢を込めています。
+                        </p>
+                    </div>
+                </div>
+                <div class="philosophy-vision">
+                    <blockquote>
+                        「縁を起点に、育みの循環をつくり、その価値を波のように広げて、自然と地域に還元する」
+                    </blockquote>
+                </div>
+                <div class="philosophy-image">
+                    <h3>企業イメージ</h3>
+                    <p>
+                        株式会社ENWAVEは、<strong>"縁を育て、地域と自然に良い波を起こす企業"</strong>です。
+                        私たちは、人や企業、地域との信頼関係を基盤に、社会に必要とされる価値を、持続可能な形で生み出し続けます。
+                    </p>
+                    <p>
+                        今後は、水耕栽培などの一次生産も視野に入れ、「つくる（生産）」と「つなぐ（流通・協業）」を両輪として、地域の課題解決と産業の活性化に取り組みます。
+                        たとえば、地域での雇用創出、地産地消の推進、環境負荷の低減、未活用資源の循環など、事業活動そのものが地域に根を張り、還元されていく仕組みづくりを目指します。
+                    </p>
+                    <p>
+                        ENWAVEが描く未来は、出会いを"点"で終わらせず、"面"へと広げていくこと。
+                        一つの縁が、次の縁を呼び、価値が循環し、やがて社会全体へ波及していく。
+                        私たちは、革新と成長を追求しながらも、自然のリズムと地域の暮らしに寄り添い、持続可能な波を起こし続けます。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせセクション -->
+    <section id="contact" class="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">お問い合わせ</h2>
+                <p class="section-subtitle">Contact</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>所在地</h4>
+                            <p>〒192-0031<br>東京都八王子市小宮町1096番地16</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>
+                            </svg>
+                        </div>
+                        <div class="contact-text">
+                            <h4>お問い合わせ</h4>
+                            <p>事業に関するお問い合わせは、<br>下記フォームよりご連絡ください。</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-message">
+                    <p>
+                        株式会社ENWAVEへのお問い合わせ、事業に関するご相談、
+                        パートナーシップのご提案など、お気軽にご連絡ください。
+                    </p>
+                    <a href="mailto:info@enwave.co.jp" class="btn btn-secondary">メールでお問い合わせ</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- フッター -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <span class="logo-en">EN</span><span class="logo-wave">WAVE</span>
+                    <p class="footer-tagline">縁を育て、地域と自然に良い波を起こす</p>
+                </div>
+                <div class="footer-links">
+                    <ul>
+                        <li><a href="#home">ホーム</a></li>
+                        <li><a href="#about">会社概要</a></li>
+                        <li><a href="#services">事業内容</a></li>
+                        <li><a href="#philosophy">企業理念</a></li>
+                        <li><a href="#contact">お問い合わせ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 株式会社ENWAVE. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

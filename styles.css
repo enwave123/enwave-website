@@ -977,3 +977,89 @@ ul {
     opacity: 1;
     transform: translateY(0);
 }
+
+
+/* ========================================
+   WelWork Card Special Styles
+======================================== */
+.welwork-card {
+    grid-column: span 1;
+}
+
+.welwork-card .service-subtitle {
+    font-size: 0.875rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: block;
+}
+
+.welwork-card .service-features {
+    margin-top: 16px;
+    padding-left: 0;
+}
+
+.welwork-card .service-features li {
+    position: relative;
+    padding-left: 24px;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+}
+
+.welwork-card .service-features li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--secondary);
+    font-weight: 700;
+}
+
+.btn-small {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 24px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    background: var(--accent-gradient);
+    color: var(--white);
+    border-radius: 25px;
+    margin-top: 16px;
+    transition: var(--transition-normal);
+    text-decoration: none;
+}
+
+.btn-small:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(74, 173, 232, 0.3);
+}
+
+.service-tag.coming-soon {
+    background: linear-gradient(135deg, var(--gray-400) 0%, var(--gray-500) 100%);
+}
+
+.service-subtitle {
+    font-size: 0.875rem;
+    color: var(--primary);
+    font-weight: 600;
+    margin-bottom: 12px;
+    display: block;
+}
+
+/* Featured cards on larger screens */
+@media (min-width: 992px) {
+    .services-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .welwork-card {
+        grid-column: span 1;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

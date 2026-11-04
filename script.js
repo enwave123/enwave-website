@@ -38,10 +38,10 @@
   const ctx = canvas.getContext('2d');
   let w = 0, h = 0, dpr = 1, t = 0, raf = 0;
   const waves = [
-    { amp: 0.060, len: 1.15, speed: 0.00035, y: 0.70, alpha: 0.55, width: 1.6 },
-    { amp: 0.045, len: 0.85, speed: 0.00050, y: 0.74, alpha: 0.35, width: 1.2 },
-    { amp: 0.075, len: 1.45, speed: 0.00025, y: 0.78, alpha: 0.25, width: 1.0 },
-    { amp: 0.035, len: 0.65, speed: 0.00060, y: 0.82, alpha: 0.18, width: 0.8 },
+    { amp: 0.060, len: 1.15, speed: 0.00035, y: 0.72, alpha: 0.70, width: 2.0 },
+    { amp: 0.045, len: 0.85, speed: 0.00050, y: 0.76, alpha: 0.50, width: 1.6 },
+    { amp: 0.075, len: 1.45, speed: 0.00025, y: 0.80, alpha: 0.38, width: 1.3 },
+    { amp: 0.035, len: 0.65, speed: 0.00060, y: 0.84, alpha: 0.26, width: 1.0 },
   ];
   const resize = () => {
     dpr = Math.min(window.devicePixelRatio || 1, 2);

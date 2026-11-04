@@ -103,9 +103,14 @@ a { color: inherit; }
   width: min(460px, 80vw); margin: 0 auto 40px;
   animation: rise 1.4s var(--ease) both;
 }
+.hero-tagline {
+  margin: 0 0 14px; font-family: var(--font-en); font-weight: 400; font-size: clamp(14px, 1.3vw, 17px);
+  letter-spacing: .28em; color: var(--teal-ink);
+  animation: rise 1.4s .15s var(--ease) both;
+}
 .hero-title {
-  margin: 0 0 20px; font-weight: 400; font-size: clamp(24px, 3.4vw, 40px);
-  letter-spacing: .14em; line-height: 1.6;
+  margin: 0 0 22px; font-weight: 500; font-size: clamp(30px, 4.4vw, 52px);
+  letter-spacing: .16em; line-height: 1.5;
   animation: rise 1.4s .2s var(--ease) both;
 }
 .hero-lead {
@@ -166,6 +171,7 @@ a { color: inherit; }
   margin-top: 56px; padding: 40px 0 0; border-top: 1px solid var(--line);
   font-size: clamp(15px, 1.5vw, 17px); color: var(--ink-soft); text-align: center;
 }
+.statement .statement-key { font-size: clamp(18px, 2.2vw, 24px); font-weight: 500; letter-spacing: .1em; margin: 0 0 18px; color: var(--ink); }
 @media (max-width: 760px) {
   .name-grid { grid-template-columns: 1fr; }
   .name-card { padding: 32px 24px; }

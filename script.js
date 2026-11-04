@@ -97,43 +97,72 @@
     ctx.globalAlpha = .3; ctx.lineWidth = 1.2; ctx.strokeStyle = '#ffffff'; ctx.beginPath();
     for (let x = 0; x <= w; x += 6) { const k = x / w; if (front(k) < .9) { ctx.moveTo(x, laneY(k) - W * .18); continue; } ctx.lineTo(x, laneY(k) - W * .18 + Math.sin(k * 7 + s) * 2); }
     ctx.stroke();
-    // 4) 縁の点 (マウス・クリックで生まれる): 互いに線でつながり、波に引かれて加わる
+    // 4) 縁の広がり (マウス・クリックで生まれる):
+    //    ひとつの縁から次の縁が生まれて右へ広がり (連鎖)、広がったものが一本の支流にまとまり、太くなりながら大きな波に流れ込む
     const now = s;
-    sparks = sparks.filter((p) => now - p.born < p.life);
-    for (const p of sparks) {
-      const age = (now - p.born) / p.life; const k = p.x / w; const ty = laneY(k);
-      const pullIn = smooth((age - .35) / .65);                  // 後半で波に吸い込まれる
-      p.cx = p.x + p.vx * age * 60; p.cy = p.y + p.vy * age * 60; p.cy = p.cy * (1 - pullIn) + ty * pullIn;
-      p.a = age < .15 ? age / .15 : 1 - smooth((age - .7) / .3);
-    }
-    ctx.strokeStyle = g;
-    for (let i = 0; i < sparks.length; i++) {
-      const a = sparks[i];
-      for (let j = i + 1; j < sparks.length; j++) {
-        const b = sparks[j]; const d = Math.hypot(a.cx - b.cx, a.cy - b.cy); const reach = w < 600 ? 110 : 160;
-        if (d < reach) { ctx.globalAlpha = (1 - d / reach) * .5 * Math.min(a.a, b.a); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.cx, a.cy); ctx.lineTo(b.cx, b.cy); ctx.stroke(); }
+    // 連鎖: 生まれて少し経った点が、次の点を右斜めに生む
+    for (const p of sparks.slice()) {
+      if (p.gen < p.maxGen && !p.spawned && now - p.born > .26 && sparks.length < 260) {
+        p.spawned = true; const kids = p.gen === 0 ? 3 : 2;
+        for (let i = 0; i < kids; i++) {
+          const a = (Math.random() - .5) * 2.4; const r = (55 + Math.random() * 70) * (w < 600 ? .6 : 1);
+          sparks.push({ x: p.x + Math.cos(a) * r + 10, y: p.y + Math.sin(a) * r, ox: p.ox, oy: p.oy, L: p.L, gen: p.gen + 1, maxGen: p.maxGen, born: now, life: p.life - .25, parent: p, spawned: false, cx: p.cx, cy: p.cy, a: 0 });
+        }
       }
-      // 波への糸: 近づくほど濃く
-      const ty = laneY(a.cx / w); const dist = Math.abs(a.cy - ty);
-      ctx.globalAlpha = Math.max(0, 1 - dist / (h * .5)) * .35 * a.a; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.cx, a.cy); ctx.lineTo(a.cx + 18, ty); ctx.stroke();
     }
+    sparks = sparks.filter((p) => now - p.born < p.life);
+    // 支流の道筋: 生まれた場所から、右下へ曲がって大きな波に入る
+    const streamY = (ox, oy, L, x) => { const u = smooth((x - ox) / L); return oy * (1 - u) + laneY(Math.min(1, x / w)) * u; };
     for (const p of sparks) {
-      ctx.globalAlpha = .9 * p.a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.cx, p.cy, 2.6, 0, 6.28); ctx.fill();
-      ctx.globalAlpha = .25 * p.a; ctx.beginPath(); ctx.arc(p.cx, p.cy, 8, 0, 6.28); ctx.fill();
+      const age = now - p.born; const t = age / p.life;
+      const gather = smooth((age - 1.6) / 1.8);                                 // 後半で支流にまとまる
+      const drift = Math.min(age, 1.2) * 26 + Math.max(0, age - 1.2) * 70;      // 右へ流れる速さ (まとまってからは速く)
+      const fx = p.x + drift, fy = p.y;
+      const sy = streamY(p.ox, p.oy, p.L, fx);
+      p.cx = fx; p.cy = fy * (1 - gather) + sy * gather;
+      p.a = (age < .25 ? age / .25 : 1) * (1 - smooth((t - .75) / .25));
+    }
+    // 線: 親子の線 (縁が縁を呼ぶ) と、近い点どうしの線。まとまるほど太く
+    ctx.strokeStyle = g;
+    for (const p of sparks) {
+      if (p.parent && p.parent.a > 0) { ctx.globalAlpha = .45 * Math.min(p.a, p.parent.a); ctx.lineWidth = 1 + 1.5 * smooth((now - p.born - 1.2) / 1.6); ctx.beginPath(); ctx.moveTo(p.parent.cx, p.parent.cy); ctx.lineTo(p.cx, p.cy); ctx.stroke(); }
+    }
+    const reach = w < 600 ? 90 : 130;
+    for (let i = 0; i < sparks.length; i++) for (let j = i + 1; j < sparks.length; j++) {
+      const a = sparks[i], b = sparks[j]; if (a.ox !== b.ox) continue;
+      const d = Math.hypot(a.cx - b.cx, a.cy - b.cy);
+      if (d < reach) { ctx.globalAlpha = (1 - d / reach) * .3 * Math.min(a.a, b.a); ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.cx, a.cy); ctx.lineTo(b.cx, b.cy); ctx.stroke(); }
+    }
+    // 支流の本体: まとまった点の数に応じて太くなり、大きな波へ流れ込む
+    const groups = new Map();
+    for (const p of sparks) { const key = p.ox; if (!groups.has(key)) groups.set(key, { ox: p.ox, oy: p.oy, L: p.L, n: 0, born: Infinity, a: 0 }); const gr = groups.get(key); gr.n++; gr.born = Math.min(gr.born, p.born); gr.a = Math.max(gr.a, p.a); }
+    for (const gr of groups.values()) {
+      const age = now - gr.born; const prog = smooth((age - 1.0) / 2.2); if (prog <= 0) continue;
+      const endX = gr.ox + gr.L * prog; const fade = 1 - smooth((age - 4.2) / 1.2);
+      ctx.strokeStyle = g; ctx.lineCap = 'round';
+      for (let x = gr.ox; x < endX; x += 10) {
+        const u = (x - gr.ox) / gr.L; ctx.globalAlpha = (.12 + .4 * u) * fade; ctx.lineWidth = 1 + (W * .6) * u * Math.min(1, gr.n / 18);
+        ctx.beginPath(); ctx.moveTo(x, streamY(gr.ox, gr.oy, gr.L, x)); ctx.lineTo(Math.min(endX, x + 11), streamY(gr.ox, gr.oy, gr.L, Math.min(endX, x + 11))); ctx.stroke();
+      }
+    }
+    // 点
+    for (const p of sparks) {
+      const r = 2.4 - 1.2 * smooth((now - p.born - 1.2) / 1.6);
+      ctx.globalAlpha = .9 * p.a; ctx.fillStyle = g; ctx.beginPath(); ctx.arc(p.cx, p.cy, r, 0, 6.28); ctx.fill();
+      ctx.globalAlpha = .22 * p.a; ctx.beginPath(); ctx.arc(p.cx, p.cy, r * 3, 0, 6.28); ctx.fill();
     }
     ctx.globalAlpha = 1;
   };
-  const spawn = (x, y, count, spread) => {
-    for (let i = 0; i < count; i++) {
-      const a = Math.random() * 6.28, r = Math.random() * spread;
-      sparks.push({ x: x + Math.cos(a) * r, y: y + Math.sin(a) * r, vx: (Math.random() - .5) * .6, vy: (Math.random() - .5) * .6 - .2, born: S, life: 3 + Math.random() * 1.5, a: 0, cx: x, cy: y });
-    }
-    if (sparks.length > 90) sparks.splice(0, sparks.length - 90);
+  // 縁の種をまく: maxGen が大きいほど広がる。L = 支流が大きな波に入るまでの横の長さ
+  const seed = (x, y, maxGen) => {
+    if (sparks.length > 200) return;
+    const L = Math.max(160, Math.min(w - x, w * (w < 600 ? .55 : .38)));
+    sparks.push({ x, y, ox: x, oy: y, L, gen: 0, maxGen, born: S, life: 5.2, parent: null, spawned: false, cx: x, cy: y, a: 0 });
   };
   const hero = canvas.parentElement;
   const local = (e) => { const r = canvas.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
-  hero.addEventListener('pointermove', (e) => { if (S - lastSpawn < .12) return; lastSpawn = S; const [x, y] = local(e); spawn(x, y, 1, 24); }, { passive: true });
-  hero.addEventListener('pointerdown', (e) => { if (e.target.closest('a, button')) return; const [x, y] = local(e); spawn(x, y, 10, 70); }, { passive: true });
+  hero.addEventListener('pointermove', (e) => { if (e.pointerType === 'touch' || S - lastSpawn < .55) return; lastSpawn = S; const [x, y] = local(e); seed(x, y, 3); }, { passive: true });
+  hero.addEventListener('pointerdown', (e) => { if (e.target.closest('a, button')) return; const [x, y] = local(e); seed(x, y, 5); }, { passive: true });
   const loop = (now) => { draw((now - t0) / 1000); raf = requestAnimationFrame(loop); };
   resize();
   if (reduceMotion) { draw(60); window.addEventListener('resize', () => { resize(); draw(60); }); return; } // 動きを減らす設定: 合流が終わった姿を静止で

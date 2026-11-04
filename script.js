@@ -32,49 +32,65 @@
     items.forEach((el) => io.observe(el));
   }
 
-  // ヒーローの波 (ロゴの色。ティール → ライム)
+  // ヒーローの波: ばらばらの細い帯 (一本一本が縁) が左から順に合流し、一本の大きな波になる。
+  // ページを開いたときに一度だけ合流を見せ、そのあとは一本の波が静かに揺れ続ける。
   const canvas = document.querySelector('[data-wave]');
   if (!canvas) return;
   const ctx = canvas.getContext('2d');
-  let w = 0, h = 0, dpr = 1, t = 0, raf = 0;
-  const waves = [
-    { amp: 0.060, len: 1.15, speed: 0.00035, y: 0.72, alpha: 0.70, width: 2.0 },
-    { amp: 0.045, len: 0.85, speed: 0.00050, y: 0.76, alpha: 0.50, width: 1.6 },
-    { amp: 0.075, len: 1.45, speed: 0.00025, y: 0.80, alpha: 0.38, width: 1.3 },
-    { amp: 0.035, len: 0.65, speed: 0.00060, y: 0.84, alpha: 0.26, width: 1.0 },
-  ];
+  let w = 0, h = 0, dpr = 1, t0 = 0, raf = 0, strands = [];
+  const C = ['#6DCCD5', '#96CDA8', '#D1E135'];
+  const rnd = (seed) => { let x = seed; return () => (x = (x * 16807) % 2147483647) / 2147483647; };
+  const ease = (x) => 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3);
+  const smooth = (x) => { const u = Math.min(1, Math.max(0, x)); return u * u * (3 - 2 * u); };
   const resize = () => {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     w = canvas.clientWidth; h = canvas.clientHeight;
     canvas.width = w * dpr; canvas.height = h * dpr;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const r = rnd(3); const n = w < 600 ? 16 : 28; strands = [];
+    for (let i = 0; i < n; i++) strands.push({ y0: h * (.06 + (i / n) * .88 + (r() - .5) * .05), off: r() - .5, ph: r() * 6.28, delay: r(), amp: .02 + r() * .04, freq: 5 + r() * 6 });
   };
-  const draw = () => {
+  const draw = (s) => {
     ctx.clearRect(0, 0, w, h);
-    const grad = ctx.createLinearGradient(0, 0, w, 0);
-    grad.addColorStop(0, '#4fc6cf');
-    grad.addColorStop(0.6, '#8fd6a9');
-    grad.addColorStop(1, '#c6e03a');
-    waves.forEach((wv, i) => {
-      ctx.beginPath();
-      for (let x = 0; x <= w; x += 6) {
-        const p = x / w;
-        const y = h * wv.y
-          + Math.sin(p * Math.PI * 2 * wv.len + t * wv.speed * 6 + i) * h * wv.amp
-          + Math.sin(p * Math.PI * 5 * wv.len - t * wv.speed * 3) * h * wv.amp * 0.25;
-        x === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    const g = ctx.createLinearGradient(0, 0, w, 0);
+    g.addColorStop(0, C[0]); g.addColorStop(.55, C[1]); g.addColorStop(1, C[2]);
+    const n = strands.length, base = h * .83, maxW = w < 600 ? 26 : 44;
+    const front = (k) => smooth((s - 1.8 - k * 3.6) / 1.6); // 合流の前線 (左から右へ)
+    const laneY = (k) => base + Math.sin(k * 4.2 + s * .8) * h * .07 + Math.sin(k * 1.6 + s * .5) * h * .035;
+    ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    // 束の本体: 合流した本数に応じて太く・濃くなる一本の波
+    for (let x = 0; x < w; x += 12) {
+      const k0 = x / w, k1 = Math.min(1, (x + 14) / w); const p0 = front(k0);
+      if (p0 <= .02) continue;
+      let arrived = 0; for (const st of strands) if (ease((s - st.delay) / 2) >= k1) arrived++;
+      const t = p0 * arrived / n;
+      ctx.strokeStyle = g; ctx.globalAlpha = .12 + .5 * t; ctx.lineWidth = 2 + maxW * t;
+      ctx.beginPath(); ctx.moveTo(x, laneY(k0)); ctx.lineTo(x + 14, laneY(k1)); ctx.stroke();
+    }
+    // 個々の帯: 束に入ると位置を少しずらし、より合わさった質感に
+    for (const st of strands) {
+      const prog = ease((s - st.delay) / 2); if (prog <= 0) continue;
+      ctx.strokeStyle = g; ctx.beginPath();
+      for (let x = 0; x <= w * prog; x += 5) {
+        const k = x / w, pull = front(k);
+        const free = st.y0 + Math.sin(k * st.freq + st.ph + s * 1.1) * h * st.amp;
+        const inBundle = laneY(k) + st.off * maxW * .8 * Math.sin(k * 3 + st.ph + s * .7);
+        const y = free * (1 - pull) + inBundle * pull;
+        x ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
       }
-      ctx.strokeStyle = grad;
-      ctx.globalAlpha = wv.alpha;
-      ctx.lineWidth = wv.width;
-      ctx.stroke();
-    });
+      ctx.globalAlpha = .5; ctx.lineWidth = 1.1; ctx.stroke();
+    }
+    // 束の中央に、光が通るような細い筋
+    ctx.globalAlpha = .35; ctx.lineWidth = 1.5; ctx.strokeStyle = '#ffffff'; ctx.beginPath();
+    for (let x = 0; x <= w; x += 6) { const k = x / w; if (front(k) < .9) { ctx.moveTo(x, laneY(k)); continue; } ctx.lineTo(x, laneY(k) - 2); }
+    ctx.stroke();
     ctx.globalAlpha = 1;
   };
-  const loop = (now) => { t = now; draw(); raf = requestAnimationFrame(loop); };
+  const loop = (now) => { draw((now - t0) / 1000); raf = requestAnimationFrame(loop); };
   resize();
-  window.addEventListener('resize', () => { resize(); if (reduceMotion) draw(); });
-  if (reduceMotion) { draw(); return; }
+  if (reduceMotion) { draw(60); window.addEventListener('resize', () => { resize(); draw(60); }); return; } // 動きを減らす設定: 合流が終わった姿を静止で
+  window.addEventListener('resize', resize);
+  t0 = performance.now();
   // 画面に見えているときだけ動かす
   const heroIo = new IntersectionObserver(([e]) => {
     if (e.isIntersecting) { if (!raf) raf = requestAnimationFrame(loop); }
